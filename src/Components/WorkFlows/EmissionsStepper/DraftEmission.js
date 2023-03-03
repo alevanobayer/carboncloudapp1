@@ -1,0 +1,353 @@
+import { useState, useEffect,useCallback } from "react";
+import { MenuItem, Select, } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import {
+  Table,
+  TableTopBar,
+  TableHeader,
+  TableHeaderRow,
+  TableHeaderCell,
+  TableBody,
+  TableRow,
+  TableCell,Elevation,TypoBody,
+  Button, Pagination, IconButton,
+} from "@element/react-components";
+import { GET_REQUEST } from "../../Utilities/RestEndPoint";
+
+
+export default function DraftEmission() {
+  const history = useHistory();
+  const [feasibilityMonitoringData, setFeasibilityMonitoringData] = useState(
+    []
+  );
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortingOrder, setSortingOrder] = useState("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectData, setSelectData] = useState("");
+  const options = [
+    { text: 'Project ID', value: 'projectId' },
+    { text: 'Farmer ID', value: 'farmerId' },
+    { text: 'CreatedBy', value: 'createdBy' },
+ 
+];
+// const handleDropdownChange = useCallback(val => {
+//   setSelectData(val.value);
+// }, []);
+  const handleChange = (e) => setSearchTerm(e.target.value);
+  const handleDropdownChange = (event) => {
+    setSelectData(event.target.value);
+  };
+  const handleOnItemsPerPageChange = useCallback((newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
+  }, []);
+
+  const sorting = (type) => {
+    if (sortingOrder === "asc") {
+      const sorted = [...feasibilityMonitoringData].sort((a, b) => {
+        if (a[type] > b[type]) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setFeasibilityMonitoringData(sorted);
+      setSortingOrder("dsc");
+    }
+    if (sortingOrder === "dsc") {
+      const sorted = [...feasibilityMonitoringData].sort((a, b) => {
+        if (a[type] < b[type]) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setFeasibilityMonitoringData(sorted);
+      setSortingOrder("asc");
+    }
+  };
+
+  const flowType = "SOC Quantification";
+  const redirectFunction = async (projectId, farmerId,) => {
+    let editEmissionData = await GET_REQUEST(
+      `getAllSOCQuantificationProjectDetails/${projectId}/${farmerId}`
+    );
+
+    if (editEmissionData) {
+      history.push({
+        pathname: "/emissionStepper",
+        state: { editEmission: editEmissionData },
+      });
+    }
+  };
+  const handleRedirectPage = () => {
+    history.push("/emissionStepper");
+  };
+  useEffect(() => {
+    async function fetchData() {
+      let feasibilityMonitoring = await GET_REQUEST(
+        `feasibilityStudyAndSocQuantificationProjects-view/${flowType}`
+      );
+      setFeasibilityMonitoringData(feasibilityMonitoring);
+      setSearchResults(feasibilityMonitoring);
+    }
+    fetchData();
+  }, []);
+  useEffect(() => {
+    if (searchTerm.length > 0) {
+      if (selectData === "farmerId") {
+        const results = searchResults.filter((o) =>
+          o.farmerId.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFeasibilityMonitoringData(results);
+      }else if (selectData === "projectName") {
+        const results = searchResults.filter((o) =>
+          o?.projectName?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFeasibilityMonitoringData(results);
+      }  
+      else if (selectData === "projectId") {
+        const results = searchResults.filter((o) =>
+          o.projectId.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFeasibilityMonitoringData(results);
+      } else if (selectData === "createdBy") {
+        const results = searchResults.filter((o) =>
+          o.createdBy.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFeasibilityMonitoringData(results);
+      }
+    } else {
+      setFeasibilityMonitoringData(searchResults);
+    }
+  }, [searchTerm]);
+
+  return (
+    <><Elevation elevation="2">
+      <div
+        style={{ zIndex: "1", left: "0", backgroundColor: "#F5F5F5", marginTop: "70px", height: "50px", position: "fixed", border: "1px solid #F5F5F5", width: "100%", }}
+      >
+        <TypoBody
+          level={1}
+          style={{
+            fontSize: "14px",
+            width: "100%",
+            height: "30px",
+            position: "relative",
+            top: "32%",
+            marginLeft: "2%",
+            left: 0,
+          }}
+        > <span>
+            <a onClick={() => history.push("/home")}>Home</a> {">"} Emissions & SOC Quantification Study {">"}Emissions & SOC Quantification Project List
+          </span>
+        </TypoBody>
+      </div>
+    </Elevation><div className="trackingContent">
+        <Table
+          trailingContent={<Pagination
+            controlled
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            totalItems={feasibilityMonitoringData.length}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={handleOnItemsPerPageChange}
+            itemsPerPageOptions={[5, 10, 25, 50, 100]} />}
+          leadingContent={<TableTopBar
+            title="Emissions & SOC Project List"
+            actions={<>
+              <input
+                type="text"
+                disabled={selectData === ""}
+                value={searchTerm}
+                placeholder="Search..."
+                onChange={handleChange} />
+              {/* <Select
+                      value={selectData}
+                      // displayEmpty
+                      options={options}
+                      label={selectData !== ""
+                        ? undefined
+                        : "Select Filter"}
+                      onChange={handleDropdownChange}
+                     className={"filter"}
+                    > */}
+              {/* <MenuItem value="projectId">Project ID</MenuItem>
+                    <MenuItem value="farmerId">Farmer ID</MenuItem>
+                    <MenuItem value="createdBy">CreatedBy</MenuItem> */}
+              {/* </Select> */}
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectData}
+                displayEmpty
+                renderValue={selectData !== ""
+                  ? undefined
+                  : () => <div>Select Filter</div>}
+                onChange={handleDropdownChange}
+                style={{
+                  height: "32px",
+                  width: "126px",
+                }}
+              >
+                <MenuItem value="projectName">Project Name</MenuItem>
+                <MenuItem value="projectId">Project ID</MenuItem>
+                <MenuItem value="farmerId">Farmer ID</MenuItem>
+                <MenuItem value="createdBy">CreatedBy</MenuItem>
+              </Select>
+              <Button
+
+                variant="outlined"
+                label="New Study"
+                style={{
+                  marginLeft: "4px",
+                  borderRadius: "4px",
+                  color: "#0464C4",
+                }}
+                onClick={handleRedirectPage} />
+            </>} />}
+        >
+          <TableHeader>
+            <TableHeaderRow>
+              <TableHeaderCell className="wordWrapTableCell" style={{ fontSize: "14px", backgroundColor: "#F5F5F5" }}>
+                Project Name
+                {sortingOrder === "asc" ? (
+                  <IconButton
+                    icon="arrow_downward"
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("projectName")} />
+                ) : (
+                  <IconButton
+                    icon="arrow_upward"
+
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("projectName")} />
+                )}
+              </TableHeaderCell>
+              <TableHeaderCell className="wordWrapTableCell" style={{ fontSize: "14px", backgroundColor: "#F5F5F5" }}>
+                Project ID
+                {sortingOrder === "asc" ? (
+                  <IconButton
+                    icon="arrow_downward"
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("projectId")} />
+                ) : (
+                  <IconButton
+                    icon="arrow_upward"
+
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("projectId")} />
+                )}
+              </TableHeaderCell>
+              <TableHeaderCell className="wordWrapTableCell" style={{ fontSize: "14px", backgroundColor: "#F5F5F5" }}>
+                Farmer ID
+                {sortingOrder === "asc" ? (
+                  <IconButton
+                    icon="arrow_downward"
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("farmerId")} />
+                ) : (
+                  <IconButton
+                    icon="arrow_upward"
+
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("farmerId")} />
+                )}
+              </TableHeaderCell>
+
+
+              <TableHeaderCell className="wordWrapTableCell" style={{ fontSize: "14px", backgroundColor: "#F5F5F5" }}>
+                Created By
+              </TableHeaderCell>
+              <TableHeaderCell className="wordWrapTableCell" style={{ fontSize: "14px", backgroundColor: "#F5F5F5" }}>
+                Status
+                {sortingOrder === "asc" ? (
+                  <IconButton
+                    icon="arrow_downward"
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("s")} />
+                ) : (
+                  <IconButton
+                    icon="arrow_upward"
+
+                    style={{ marginLeft: "-14px" }}
+                    onClick={() => sorting("projectId")} />
+                )}
+              </TableHeaderCell>
+              <TableHeaderCell align="center" style={{ backgroundColor: "#F5F5F5" }}>Edit</TableHeaderCell>
+            </TableHeaderRow>
+          </TableHeader>
+          <TableBody>
+            {feasibilityMonitoringData.length > 0 &&
+              feasibilityMonitoringData
+                .slice(itemsPerPage * (currentPage - 1), itemsPerPage * (currentPage - 1) + itemsPerPage)
+                .map((item, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell
+                      // component="th"
+                      scope="row"
+                      className="wordWrapTableCell"
+
+                    >
+                      {item.projectName}
+                    </TableCell>
+                    <TableCell
+                      // component="th"
+                      scope="row"
+                      className="wordWrapTableCell"
+
+                    >
+                      {item.projectId}
+                    </TableCell>
+                    <TableCell className="wordWrapTableCell">
+                      {item.farmerId}
+                    </TableCell>
+                    <TableCell className="wordWrapTableCell">
+                      {item.createdBy}
+                    </TableCell>
+                    <TableCell className="wordWrapTableCell">
+                      {item.status}
+                    </TableCell>
+                    <TableCell className="wordWrapTableCell">
+                      <Button
+                        variant="outlined"
+                        //  disabled={true}
+                        label="edit"
+                        onClick={() => {
+                          redirectFunction(
+                            item.projectId,
+                            item.farmerId
+
+
+                          );
+                        } } />
+                    </TableCell>
+
+                  </TableRow>
+                ))}
+
+            {feasibilityMonitoringData.length === 0 && (
+              <TableRow>
+                <TableCell>No data found</TableCell>
+              </TableRow>
+            )}
+            {/* <TableRow>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 100]}
+        component="div"
+        count={feasibilityMonitoringData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </TableRow> */}
+          </TableBody>
+        </Table>
+      </div></>
+  );
+}

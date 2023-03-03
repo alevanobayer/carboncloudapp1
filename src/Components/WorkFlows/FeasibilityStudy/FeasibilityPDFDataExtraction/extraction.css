@@ -1,0 +1,24 @@
+.extractionContent {
+    display: flex;
+    margin-bottom: 4rem;
+    height: 130px;
+    width: 93%;
+    border-radius: 5px;
+    background-color: #93C9FF;
+    margin-top: 9rem;
+}
+
+.extractiontStepper {
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.interventionInput {
+    width: 99%;
+    margin-left: 1%;
+}
+
+.uploadExtraction {
+    background-color: aqua;
+    width: 99%;
+}

@@ -1,0 +1,35 @@
+.uploadInputButton{
+    margin-top: 5%!important;
+    margin-left: -1.75% !important;
+}
+
+  .btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    background-color: #e9ecef !important;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.38) !important;
+    border: 1px solid #ced4da !important;
+    color: #212529;
+    opacity: inherit !important;
+  }
+  
+.uploadInputBox{
+    margin-top: 5%!important;
+    margin-left: -9% !important;
+}
+.uploadButtonWithoutMargin {
+    margin-left: -1.75% !important;
+}
+
+
+.downloadButton{
+    width:97%;
+    margin-top: 9% !important;
+    margin-left: 1% !important;
+    background-color: #2B882E !important;
+    text-transform: unset !important;
+}
+.css-1ndpvdd-MuiTableCell-root{
+    font-weight: bold !important;
+  }
+  .css-1gzy9y4{
+    font-weight: bold !important;
+  }

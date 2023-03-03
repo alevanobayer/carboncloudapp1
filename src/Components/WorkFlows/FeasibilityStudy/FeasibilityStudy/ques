@@ -1,0 +1,135 @@
+
+            <span className="labelCls">
+              4.1. Where is the location of the current project region (i.e.
+              area encompassing project fields, not including settlements,
+              forests)? Please provide a digital map with area boundary
+              coordinates as georeferenced GIS data (ESRI shape files in WGS84
+              coordinate system). If GIS capacity is not available, please
+              provide a Google Earth kml/kmz files of the respective area
+              clearly delineating the boundary.
+              
+            </span>
+            <AreaDescriptionDetails
+              isDisabled={isDisabled}
+              questions={props?.defaultFeasibilityStudyState}
+              questionArray={
+                questions.feasibilityStudyData.questionsAndAnswers[13]
+                  .subQuestionsAndSubAnswers
+              }
+              questionNo={"question4"}
+              {...props}
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.2. What is the total area of the project area in ha (hectares)?
+              This should include all fields that are considering changing
+              cultivation method / practices with the goal of of GHG reduction.
+              
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.2"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(14, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[14]["4.2"]
+              }
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.3. If the land is not owned by the farmer growing the main crop
+              (tomatoes), is a lease of the land in place? If yes, when does the
+              lease end?
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.3"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(15, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[15]["4.3"]
+              }
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.4. When did the current land holder (farmer) purchase or lease
+              the land?
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.4"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(16, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[16]["4.4"]
+              }
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.5. Are there water bodies or rivers adjoining the project area?
+              Please describe:
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.5"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(17, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[17]["4.5"]
+              }
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.6. Is the project area currently degraded (soil erosion, loss of
+              vegetation cover, loss of productivity, classified as degraded
+              land, etc.)? Please describe:
+              
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.6"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(18, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[18]["4.6"]
+              }
+            />
+            <br />
+            <br />
+            <span className="labelCls">
+              4.7. Does the project area include non-accessible or non-useable
+              land (e.g. too steep, too remote)? If yes, please indicate area
+              size.
+            </span>
+            <input
+              id="fname"
+              type="text"
+              name="4.7"
+              className="question"
+              disabled={isDisabled}
+              onChange={(event) => handleChange(19, event)}
+              value={
+                questions.feasibilityStudyData.questionsAndAnswers[19]["4.7"]
+              }
+            />
+            <br />
+            <br />
+          </div>
+        }
+      </div>
+    </div>

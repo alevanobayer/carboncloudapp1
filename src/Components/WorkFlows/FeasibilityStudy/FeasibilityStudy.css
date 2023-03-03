@@ -1,0 +1,15 @@
+.childInputExport {
+  margin-top: 8px;
+  width: 100%;
+}
+.downloadIcon{
+  cursor: pointer;
+  color:#0464c4;
+}
+.ViewIcon{
+  cursor: pointer;
+}
+.downloadIconDisable{
+  cursor:not-allowed;
+  color: rgba(0, 0, 0, 0.4);
+}

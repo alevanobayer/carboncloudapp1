@@ -1,0 +1,23 @@
+.homeParent{
+    display:flex;
+    margin-top: 5%;
+}
+.homeCarbon{
+    margin-left: 9%;
+    width: 420px;
+}
+.Carbon{
+    margin-left: 8%;
+    width: 400px;
+}
+.services{
+    margin-top: 7%;
+}
+.homeImage{
+    width: 1200px;
+     height: 340px ;
+}
+.homeMain{
+    margin-top: 8.5rem;
+    margin-bottom: 4%;
+}

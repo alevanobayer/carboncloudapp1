@@ -1,0 +1,79 @@
+.farmerContent {
+    display: flex;
+    margin-left: 17%;
+    margin-top: 5rem;
+}
+.machineContent {
+    display: flex;
+    margin-left: 12%;
+    height: 130px;
+    margin-top: 5rem;
+}
+
+.farmerFeasibility {
+    display: block;
+
+    height: 570px;
+}
+
+.uploadButton {
+    margin-left: -2% !important;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    margin-top: 18%;
+    height: 37%;
+    background-color: #1976d2 !important;
+}
+
+.uploadInputBox {
+    width: 80% !important;
+    margin-left: 1% !important;
+}
+
+.uploadStatus {
+    margin-left: 16%;
+}
+
+.uploadInput {
+    width: 100%;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    margin-top: 25%;
+}
+
+.downloadButton {
+    width: 100%;
+    margin-top: 25% !important;
+    background-color: #2B882E !important;
+    text-transform: unset !important;
+}
+
+.pdfStyle {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    overflow-y: scroll;
+    border: 1px solid grey;
+}
+
+.pdfHeadStyle {
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    border: 1px solid grey;
+}
+
+.uploadBox {
+    width: 100%;
+}

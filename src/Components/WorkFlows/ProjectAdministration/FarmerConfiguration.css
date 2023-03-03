@@ -1,0 +1,36 @@
+.parentInput {
+    display: flex;
+    grid-gap: 20px;
+    width: 100%;
+}
+
+
+.childInput {
+    margin: 8px;
+    width: 100%;
+}
+.parentInputButton {
+    display: flex;
+    grid-gap: 16px;
+    width: 99%;
+    margin-left: -1%;
+}
+
+
+.childInputName {
+    margin-top: 8px;
+    margin-left: 1%;
+    width: 100%;
+}
+
+.childInputLastName {
+    margin-top: 8px;
+    margin-right: -1%;
+    width: 100%;
+}
+
+.removeField {
+margin-left: 27%;
+    margin-top: 4px;
+
+}
